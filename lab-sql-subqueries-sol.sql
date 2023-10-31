@@ -120,7 +120,7 @@ LIMIT 1
 -- 8. Retrieve the client_id and the total_amount_spent of those clients who spent more than the average of the total_amount spent by each client. 
 -- You can use subqueries to accomplish this.
 
--- Tried to get the average of total_amount spent by each client instead of just the average of it all and I think I used too much math
+-- Tried to get the average of total_amount spent by each client instead of just the average of it all by 3 queries in total
 -- If the math is correct, then the average is 112.53
 
 
@@ -139,9 +139,11 @@ HAVING SUM(amount) > (
 ; 
 
 -- To get the average amount spent by each client:
+
+        
 SELECT AVG(amount) as average_amount
-    FROM(
-		SELECT SUM(amount) as amount
-		FROM payment
-		GROUP BY customer_id
+FROM(
+	SELECT SUM(amount) as amount
+	FROM payment
+	GROUP BY customer_id
     ) as sub1
